@@ -41,4 +41,23 @@
 
   Do not use literal `/src/...` paths in `src`/`href` attributes — Vite cannot rewrite them
   and they are not copied into `dist/`, so they 404 in the built site.
+
+  ### Troubleshooting
+
+  **`Error: Get Pages site failed ... Not Found` in the "Setup Pages" step.** The repository
+  has no Pages site using the `GitHub Actions` source, so the Pages API returns 404. Set
+  **Settings → Pages → Source** to **GitHub Actions**, then re-run the workflow. The
+  `enablement` input of `actions/configure-pages` cannot fix this with the default token —
+  the action requires a personal access token with `repo` scope, or a GitHub App with
+  `administration:write` and `pages:write`. If the Pages settings page offers no source
+  selector, the repository is private: GitHub Pages for private repositories requires a
+  paid plan, so make the repository public or deploy to a host that allows private
+  repositories on its free tier (Cloudflare Pages, Vercel, Netlify).
+
+  **`Node 20 is being deprecated` warning.** Informational — the runner is telling you an
+  action still declares the Node 20 runtime. The workflow pins Node 24 majors, so a new
+  occurrence means an action needs a version bump; do not set
+  `ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION`, as Node 20 is removed from runners on
+  September 23, 2026.
+
   
